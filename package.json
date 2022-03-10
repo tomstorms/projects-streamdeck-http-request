@@ -1,0 +1,13 @@
+{
+  "name": "projects-streamdeck-blinkstick",
+  "private": true,
+  "version": "0.1.0",
+  "description": "HTTP Request server for a Stream Deck",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.17.3",
+    "node-hid": "^2.1.1"
+  }
+}
