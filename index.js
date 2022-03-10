@@ -5,7 +5,7 @@ const port = 32100;
 const blinkstickLib = require('./lib/blinkstick');
 global.blinkstickDevice = blinkstickLib.findFirst();
 
-const blinkstick = require('./plugins/blinkstick');
+const blinkstick = require('./plugins/blinkstick/blinkstick');
 
 app.get('/blinkstick/on', (req, res) => {
   res.send('Blinkstick On');
