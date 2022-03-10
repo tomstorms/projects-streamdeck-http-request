@@ -7,7 +7,7 @@ var _blinkingStateOn = false;
 // Functions
 module.exports = {
 
-    turnOn: function(keyIndex) {
+    turnOn: function() {
 
         _state = 'available';
 
@@ -17,7 +17,7 @@ module.exports = {
 
     },
 
-    turnOff: function(keyIndex) {
+    turnOff: function() {
 
         _state = 'off';
 
@@ -27,7 +27,7 @@ module.exports = {
 
     },
 
-    turnBusy: function(keyIndex) {
+    turnBusy: function() {
 
         _state = 'busy';
 
@@ -37,7 +37,7 @@ module.exports = {
 
     },
 
-    turnOnBlink: function(keyIndex) {
+    turnOnBusyBlink: function() {
 
         // Start blink
 
@@ -47,29 +47,17 @@ module.exports = {
 
             console.log(_blinkingStateOn ? 'on' : 'off');
 
-            if (_blinkingStateOn) {
-                
-                if (_state == 'busy') {
-                    if (blinkstickDevice) {
-                        blinkstickDevice.setColor('red');
-                    }
-                }
-                else if (_state == 'available') {
-                    if (blinkstickDevice) {
-                        blinkstickDevice.setColor('green');
-                    }
+            if (blinkstickDevice) {
+                console.log('has device')
+
+                if (_blinkingStateOn) {
+                    blinkstickDevice.setColor('red');
                 }
                 else {
                     blinkstickDevice.setColor('black');
                 }
 
             }
-            else {
-                if (blinkstickDevice) {
-                    blinkstickDevice.setColor('black');
-                }
-            }
-
 
             _blinkingStateOn = !_blinkingStateOn; // toggle
 
@@ -78,36 +66,36 @@ module.exports = {
 
     },
 
-    turnOffBlink: function(keyIndex) {
+    turnOffBusyBlink: function() {
 
         // Stop blinking
         _blinkingStateOn = false;
         _isBlinkingOn = false;
         clearInterval(_tmrBlinker);
 
-        if (_state == 'busy') {
-            if (blinkstickDevice) {
-                blinkstickDevice.setColor('red');
-            }
-        }
-        else if (_state == 'available') {
-            if (blinkstickDevice) {
-                blinkstickDevice.setColor('green');
-            }
+        blinkstickDevice.setColor('black');
+
+    },
+
+    toggleBusyBlink: function() {
+
+        // Toggle Busy Blinking
+        if (_isBlinkingOn) {
+            module.exports.turnOffBusyBlink();
         }
         else {
-            blinkstickDevice.setColor('black');
+            module.exports.turnOnBusyBlink();
         }
 
     },
 
-    toggleOn: function(keyIndex) {
+    toggleOn: function() {
 
         if (_state == 'off') {
-            module.exports.turnOn(keyIndex);
+            module.exports.turnOn();
         }
         else {
-            module.exports.turnOff(keyIndex);
+            module.exports.turnOff();
         }
 
     },
