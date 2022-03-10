@@ -18,7 +18,7 @@ Alternatively, install [pm2](https://www.npmjs.com/package/pm2) to run the scrip
 
 ## Blinkstick
 
-![Blinkstick on Stream Deck](./plugins/blinkstick/screenshot.png.svg)
+![Blinkstick on Stream Deck](./plugins/blinkstick/screenshot.png)
 
 - Access the following URLs in your browser to test:
 
