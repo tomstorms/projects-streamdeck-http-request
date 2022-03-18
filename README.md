@@ -1,7 +1,7 @@
 # Project StreamDeck - HTTP Request
 
 Node script that creates local endpoints to support triggering
-a 'HTTP Request' action from your Stream Deck.
+a 'HTTP Request' action from your [Stream Deck](https://www.elgato.com/en/stream-deck).
 
 Currently supports:
 - Changing colours of a USB connected [Blinkstick](https://www.blinkstick.com/).
@@ -52,7 +52,7 @@ Alternatively, install [pm2](https://www.npmjs.com/package/pm2) to run the scrip
 
 Once the server is running you can then setup HTTP Request buttons on your Stream Deck.
 
-![Blinkstick on Stream Deck](./plugins/blinkstick/screenshot.png)
+![Blinkstick on Stream Deck](./assets/screenshot.png)
 
 
 ## Available Endpoints
