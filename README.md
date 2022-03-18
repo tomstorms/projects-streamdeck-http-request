@@ -7,6 +7,41 @@ Currently supports:
 - Changing colours of a USB connected [Blinkstick](https://www.blinkstick.com/).
 - Updating Slack messages based on button presses
 
+## Available States
+
+When you setup this project, on button press the following will occur:
+
+Off
+- Blinklight = Turns off
+- Slack Presence = Set to away
+
+Available
+- Blinklight = Green light
+- Slack Presence = Set to auto/available
+
+In Meeting
+- Blinklight = Red light
+- Slack Presence = Set to auto/available
+- Slack Status Text= :random-meeting-emoji: In Meeting
+
+Lunch
+- Blinklight = Yellow light
+- Slack Presence = Set to auto/available
+- Slack Status Text = :random-food-emoji: On lunch
+- Slack Status Expiry = 1 hour
+
+Away from my deck
+- Blinklight = Turns off
+- Slack Presence = Set to auto/available
+- Slack Status Text = :timer_clock: Away from my desk
+- Slack Status Expiry = 4 hours
+
+Be right back
+- Blinklight = Yellow light
+- Slack Presence = Set to auto/available
+- Slack Status Text = :timer_clock: Be right back
+- Slack Status Expiry = 30 mins
+
 ## Getting Start
 
 - `npm run start` - Run the terminal in the background
@@ -15,59 +50,33 @@ Alternatively, install [pm2](https://www.npmjs.com/package/pm2) to run the scrip
 
 - `pm2 start index.js --name "project-streamdeck-http-request"`
 
-
-## Blinkstick
+Once the server is running you can then setup HTTP Request buttons on your Stream Deck.
 
 ![Blinkstick on Stream Deck](./plugins/blinkstick/screenshot.png)
 
-- Access the following URLs in your browser to test:
 
-http://localhost:32100/blinkstick/on - Turn on your blinkstick (Green)
-http://localhost:32100/blinkstick/off - Turn off your blinkstick (Black)
+## Available Endpoints
 
-- Setup the following 'HTTP Request' buttons in your Stream Deck:
+Base URL: `http://localhost:32100`
 
-### Off Button
+Available endpoints:
 
-URL: `http://localhost:32100/blinkstick/off`
+- `/status/off`
+- `/status/available`
+- `/status/in-meeting`
+- `/status/lunch`
+- `/status/away`
+- `/status/brb`
 
-Icon: Use `./plugins/blinkstick/images/blinkstick-off.png`
-
-Method: GET
-
-
-### On Button
-
-URL: `http://localhost:32100/blinkstick/on`
-
-Icon: Use `./plugins/blinkstick/images/blinkstick-available.png`
-
-Method: GET
-
-
-### Busy Button
-
-URL: `http://localhost:32100/blinkstick/busy`
-
-Icon: Use `./plugins/blinkstick/images/blinkstick-busy.png`
-
-Method: GET
-
-
-### Blinking Busy Button
-
-URL: `http://localhost:32100/blinkstick/busy/blink-on`
-
-Icon: Use `./plugins/blinkstick/images/blinkstick-busy-blink.png`
-
-Method: GET
+- `/blinkstick/on`
+- `/blinkstick/off`
+- `/blinkstick/busy`
+- `/blinkstick/busy/blink-on`
 
 
 ## Slack Integration
 
-This functionality helps change your Slack status when you change your Blinkstick.
-
-It does require an API from Slack. To set this up:
+Updating your Slack status does require an API from Slack. To set this up:
 
 - Create a new app from scratch: https://api.slack.com/apps
 - Give it a name like 'StreamDeck Slack - <slack-workspace-name>' and choose the Workspace
@@ -75,5 +84,4 @@ It does require an API from Slack. To set this up:
 - Scroll down to 'User Token Scopes' and add the 'users.profile:write' 'users:write' scope - basically tells Slack you want this app to change your Slack status
 - Scroll back up and 'Install to Workspace' and follow the prompts to have the app install
 - This will provide a 'User OAuth Token' which you can then add to your `.env` file
-
 

@@ -4,71 +4,98 @@ const express = require('express');
 const app = express();
 const port = 32100;
 
-const blinkstickLib = require('./lib/blinkstick');
-global.blinkstickDevice = blinkstickLib.findFirst();
-
-const slackLib = require('./lib/slack');
-
 const blinkstick = require('./plugins/blinkstick/blinkstick');
+const slack = require('./plugins/slack/slack');
 
-app.get('/blinkstick/on', (req, res) => {
-  blinkstick.turnOffBusyBlink();
-  blinkstick.turnOn();
-  // slackLib.setSlackStatusAvailable();
-  res.send('Blinkstick On');
+// --- STATUS ------------------------------------------
+
+app.get('/status/off', (req, res) => {
+  blinkstick.turnOff();
+
+  slack.setSlackPresenceAway();
+  slack.setSlackStatusReset();
+
+  res.send('Status: Off');
 });
+
+app.get('/status/available', (req, res) => {
+  blinkstick.turnOn();
+
+  slack.setSlackPresenceAuto();
+  slack.setSlackStatusAvailable();
+
+  res.send('Status: Available');
+});
+
+app.get('/status/in-meeting', (req, res) => {
+  blinkstick.turnOnRed();
+
+  slack.setSlackPresenceAuto();
+  slack.setSlackStatusInMeeting();
+
+  res.send('Status: In Meeting');
+});
+
+app.get('/status/lunch', (req, res) => {
+  blinkstick.turnOnYellow();
+
+  slack.setSlackPresenceAuto();
+  slack.setSlackStatusLunch();
+
+  res.send('Status: Lunch');
+});
+
+app.get('/status/away', (req, res) => {
+  blinkstick.turnOff();
+
+  slack.setSlackPresenceAuto();
+  slack.setSlackStatusAway();
+
+  res.send('Status: Away');
+});
+
+app.get('/status/brb', (req, res) => {
+  blinkstick.turnOnYellow();
+
+  slack.setSlackPresenceAuto();
+  slack.setSlackStatusBRB();
+
+  res.send('Status: BRB');
+});
+
+
+
+// --- BLINKSTICK ------------------------------------------
 
 app.get('/blinkstick/off', (req, res) => {
-  blinkstick.turnOffBusyBlink();
   blinkstick.turnOff();
-  res.send('Blinkstick off');
+
+  res.send('Blinkstick: Off');
 });
 
-app.get('/blinkstick/busy', (req, res) => {
-  blinkstick.turnOffBusyBlink();
-  blinkstick.turnBusy();
-  res.send('Blinkstick Busy On');
+app.get('/blinkstick/on', (req, res) => {
+  blinkstick.turnOn();
+
+  res.send('Blinkstick: On');
 });
 
-// app.get('/blinkstick/lunch', (req, res) => {
-//   // blinkstick.turnOffBusyBlink();
-//   // blinkstick.turnBusy();
-//   // res.send('Blinkstick Busy On');
-// });
+app.get('/blinkstick/red', (req, res) => {
+  blinkstick.turnOnRed();
 
-// app.get('/blinkstick/busy/blink-toggle', (req, res) => {
-//   blinkstick.turnOffBusyBlink();
-//   blinkstick.toggleBusyBlink();
-//   res.send('Blinkstick Busy Blinking Toggling');
-// });
+  res.send('Blinkstick: Red On');
+});
 
+app.get('/blinkstick/green', (req, res) => {
+  blinkstick.turnOnGreen();
 
-// ---------------------------------------------
+  res.send('Blinkstick: Green On');
+});
 
-// app.get('/slack/available', (req, res) => {
-//   slackLib.setSlackStatusAvailable();  
-//   res.send('Slack - set available');
-// });
+app.get('/blinkstick/yellow', (req, res) => {
+  blinkstick.turnOnYellow();
 
-// app.get('/slack/away', (req, res) => {
-//   slackLib.setSlackStatusAway();  
-//   res.send('Slack - set away');
-// });
-
-// app.get('/slack/lunch', (req, res) => {
-//   slackLib.setSlackStatusLunch();  
-//   res.send('Slack - set at launch');
-// });
-
-// app.get('/slack/away', (req, res) => {
-//   slackLib.setSlackPresenceAway();  
-//   res.send('Slack - set away');
-// });
-
-// app.get('/slack/online', (req, res) => {
-//   slackLib.setSlackPresenceAuto();  
-//   res.send('Slack - set auto');
-// });
+  res.send('Blinkstick: Yellow On');
+});
 
 
 // ---------------------------------------------
