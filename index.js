@@ -46,7 +46,7 @@ app.get('/status/lunch', (req, res) => {
 });
 
 app.get('/status/away', (req, res) => {
-  blinkstick.turnOff();
+  blinkstick.turnOnYellow();
 
   slack.setSlackPresenceAuto();
   slack.setSlackStatusAway();
@@ -61,6 +61,12 @@ app.get('/status/brb', (req, res) => {
   slack.setSlackStatusBRB();
 
   res.send('Status: BRB');
+});
+
+app.get('/status/disco', (req, res) => {
+  blinkstick.turnOnDisco();
+
+  res.send('Status: Disco');
 });
 
 
